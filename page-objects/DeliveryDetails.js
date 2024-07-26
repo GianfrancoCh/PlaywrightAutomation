@@ -34,7 +34,7 @@ export class DeliveryDetails{
         await this.cityInput.fill(userAdress.city)
         await this.countryDropdown.waitFor()
         await this.countryDropdown.selectOption(userAdress.country)
-    
+        
     }
 
     saveDetails = async () => {
