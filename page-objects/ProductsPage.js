@@ -1,5 +1,6 @@
 import {expect} from "@playwright/test"
 import { Navigation } from "./Navigation"
+import { isDesktopViewport } from "../utils/isDesktopViewport.js"
 
 export class ProductPage{
 
@@ -22,13 +23,18 @@ export class ProductPage{
         await specificAddButton.waitFor()
         await expect (specificAddButton).toHaveText("Add to Basket")
         const navigation = new Navigation(this.page)
-        const basketCounterBeforeAdding = await navigation.getBasketCount()
+        //only desktop viewport
+        let basketCounterBeforeAdding
+        if(isDesktopViewport(this.page)){  
+            basketCounterBeforeAdding = await navigation.getBasketCount()
+        }
         await specificAddButton.click()
         await expect (specificAddButton).toHaveText("Remove from Basket")
-        const basketCountAfterAdding = await navigation.getBasketCount()
-
-        expect(basketCountAfterAdding).toBeGreaterThan(basketCounterBeforeAdding)
-   
+        //only desktop viewport
+        if(isDesktopViewport(this.page)){
+            const basketCountAfterAdding = await navigation.getBasketCount()
+            expect(basketCountAfterAdding).toBeGreaterThan(basketCounterBeforeAdding)
+        }
    
     }
 

@@ -23,7 +23,8 @@ const config = {
      */
     timeout: 5000
   },
-  /* Run tests in files in parallel */
+  globalSetup: require.resolve("./globalSetup.js"),
+    /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
@@ -53,7 +54,6 @@ const config = {
         ...devices['Desktop Chrome'],
       },
     },
-
     // {
     //   name: 'firefox',
     //   use: {
@@ -81,7 +81,7 @@ const config = {
     //     ...devices['iPhone 12'],
     //   },
     // },
-
+      
     /* Test against branded browsers. */
     // {
     //   name: 'Microsoft Edge',

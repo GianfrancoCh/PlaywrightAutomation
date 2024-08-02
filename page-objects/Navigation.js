@@ -1,4 +1,5 @@
 import {expect} from "@playwright/test"
+import { isDesktopViewport } from "../utils/isDesktopViewport"
 
 export class Navigation{
 
@@ -8,6 +9,7 @@ export class Navigation{
 
         this.basketCounter = page.locator('[data-qa="header-basket-count"]')
         this.checkoutLink = page.getByRole('link', { name: 'Checkout' })
+        this.mobileBurgerButton = page.locator('[data-qa="burger-button"]')
     }
 
 
@@ -19,11 +21,16 @@ export class Navigation{
     }
 
     goToCheckout = async () =>{
+        if(!isDesktopViewport(this.page)){
+            await this.mobileBurgerButton.waitFor()
+            await this.mobileBurgerButton.click()
+        }
         await this.checkoutLink.waitFor()
         await this.checkoutLink.click()
         await this.page.waitForURL("/basket")
-
     }   
+
+
 
    
 }
